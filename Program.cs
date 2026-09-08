@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using System.Runtime.Serialization;
 string mensagemDeBoasVindas = "Boas vindas ao Screen Sound";
 List<Banda> bandasRegistradas = new List<Banda>();
-List<Musica> listaDeMusicas = new List<Musica>();
 
 
 void ExibirLogo()
@@ -23,36 +22,40 @@ void ExibirLogo()
 
 void ExibirOpcoesDoMenu()
 {
-    ExibirLogo();
-    Console.WriteLine("\nDigite 1 para ver as informações de bandas.");
-    Console.WriteLine("Digite 2 para ver informações de músicas");
-    Console.WriteLine("Digite 3 para ver notas");
-    Console.WriteLine("Digite 4 para sair");
-
-    Console.Write("\nDigite a sua opção: ");
-    string opcaoEscolhida = Console.ReadLine()!;
-    int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
-
-    switch (opcaoEscolhidaNumerica)
+    int opcaoEscolhidaNumerica = 0;
+    do
     {
-        case 1:
-            VerBandas();
-            SubMenuBandas();
-            break;
-        case 2:
-            VerMusicas();
-            SubMenuMusicas();
-            break;
-        case 3:
-            SubMenuNotas();
-            break;
-        case 4:
-            Console.WriteLine("Tchau tchau :)"); ;
-            break;
-        default:
-            Console.WriteLine("Opção inválida");
-            break;
-    }
+        ExibirLogo();
+        Console.WriteLine("\nDigite 1 para ver as informações de bandas.");
+        Console.WriteLine("Digite 2 para ver informações de músicas");
+        Console.WriteLine("Digite 3 para ver notas");
+        Console.WriteLine("Digite 4 para sair");
+
+        Console.Write("\nDigite a sua opção: ");
+        string opcaoEscolhida = Console.ReadLine()!;
+        opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
+
+        switch (opcaoEscolhidaNumerica)
+        {
+            case 1:
+                VerBandas();
+                SubMenuBandas();
+                break;
+            case 2:
+                VerMusicas();
+                SubMenuMusicas();
+                break;
+            case 3:
+                SubMenuNotas();
+                break;
+            case 4:
+                Console.WriteLine("Tchau tchau :)"); ;
+                break;
+            default:
+                Console.WriteLine("Opção inválida");
+                break;
+        }
+    } while (opcaoEscolhidaNumerica != 4);
 }
 
 void VerBandas()
@@ -66,37 +69,40 @@ void VerBandas()
 
 void SubMenuBandas()
 {
-    Console.WriteLine("\nDigite 1 para cadastrar uma nova banda.");
-    Console.WriteLine("Digite 2 para alterar informação de banda.");
-    Console.WriteLine("Digite 3 para deletar banda.");
-    Console.WriteLine("Digite 4 para ver músicas de uma banda.");
-    Console.WriteLine("Digite 5 para voltar ao menu principal.");
-
-    Console.Write("\nDigite a sua opção: ");
-    string opcaoEscolhida = Console.ReadLine()!;
-    int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
-
-    switch (opcaoEscolhidaNumerica)
+    int opcaoEscolhidaNumerica = 0;
+    do
     {
-        case 1:
-            RegistrarBanda();
-            break;
-        case 2:
-            AlterarBanda();
-            break;
-        case 3:
-            DeletarBanda();
-            break;
-        case 4:
-            VerMusicas();
-            break;
-        case 5:
-            ExibirOpcoesDoMenu();
-            return;
-        default:
-            Console.WriteLine("Opção inválida");
-            break;
-    }
+        Console.WriteLine("\nDigite 1 para cadastrar uma nova banda.");
+        Console.WriteLine("Digite 2 para alterar informação de banda.");
+        Console.WriteLine("Digite 3 para deletar banda.");
+        Console.WriteLine("Digite 4 para ver músicas de uma banda.");
+        Console.WriteLine("Digite 5 para voltar ao menu principal.");
+
+        Console.Write("\nDigite a sua opção: ");
+        string opcaoEscolhida = Console.ReadLine()!;
+        opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
+
+        switch (opcaoEscolhidaNumerica)
+        {
+            case 1:
+                RegistrarBanda();
+                break;
+            case 2:
+                AlterarBanda();
+                break;
+            case 3:
+                DeletarBanda();
+                break;
+            case 4:
+                VerMusicas();
+                break;
+            case 5:
+                return;
+            default:
+                Console.WriteLine("Opção inválida");
+                break;
+        }
+    } while (opcaoEscolhidaNumerica != 5);
 }
 
 void RegistrarBanda()
@@ -110,7 +116,7 @@ void RegistrarBanda()
     bandasRegistradas.Add(new Banda(nomeDaBanda, new List<int>(), generoDaBanda, new List<Musica>()));
     Console.WriteLine($"A banda {nomeDaBanda} foi registrada!");
     Thread.Sleep(2000);
-    ExibirOpcoesDoMenu();
+    return;
 }
 
 void AlterarBanda()
@@ -148,7 +154,6 @@ void AlterarBanda()
             Console.WriteLine("Opção inválida. Aperte qualquer tecla para tentar novamente.");
             Console.ReadKey();
             Thread.Sleep(1500);
-            AlterarBanda();
             return;
         }
 
@@ -161,8 +166,7 @@ void AlterarBanda()
     Console.WriteLine($"Pressione qualquer tecla para voltar ao menu principal.");
     Console.ReadKey();
     Console.Clear();
-    ExibirOpcoesDoMenu();
-
+    return;
 }
 
 void DeletarBanda()
@@ -191,10 +195,9 @@ void DeletarBanda()
         {
             Console.Clear();
             Thread.Sleep(1500);
-            Console.WriteLine($"Pressione qualquer tecla para voltar ao menu principal.");
+            Console.WriteLine($"Pressione qualquer tecla para voltar ao menu anterior.");
             Console.ReadKey();
             Console.Clear();
-            ExibirOpcoesDoMenu();
             return;
         }
         else
@@ -202,7 +205,6 @@ void DeletarBanda()
             Console.WriteLine("Opção inválida. Aperte qualquer tecla para tentar novamente.");
             Console.ReadKey();
             Thread.Sleep(1500);
-            DeletarBanda();
             return;
         }
     }
@@ -214,7 +216,7 @@ void DeletarBanda()
     Console.WriteLine($"Pressione qualquer tecla para voltar ao menu principal.");
     Console.ReadKey();
     Console.Clear();
-    ExibirOpcoesDoMenu();
+    return;
 
 }
 
@@ -240,7 +242,6 @@ void VerMusicas()
             Console.Write($"\nA banda {bandaEncontrada.Nome} ainda não possui nenhuma música para ser avaliada.");
             Console.ReadKey();
             Console.WriteLine("Pressione qualquer tecla para voltar ao menu anterior.");
-            VerMusicas();
             return;
         }
         else
@@ -256,57 +257,59 @@ void VerMusicas()
     Console.WriteLine($"Pressione qualquer tecla para voltar ao menu principal.");
     Console.ReadKey();
     Console.Clear();
-    ExibirOpcoesDoMenu();
 }
 
 void SubMenuMusicas()
 {
-    Console.WriteLine("\nDigite 1 para cadastrar uma nova música.");
-    Console.WriteLine("Digite 2 para alterar informação de uma música.");
-    Console.WriteLine("Digite 3 para deletar música.");
-    Console.WriteLine("Digite 4 para voltar ao menu principal.");
-
-    Console.Write("\nDigite a sua opção: ");
-    string opcaoEscolhida = Console.ReadLine()!;
-    int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
-
-    switch (opcaoEscolhidaNumerica)
+    int opcaoEscolhidaNumerica = 0;
+    do
     {
-        case 1:
-            RegistrarMusica();
-            break;
-        case 2:
-            AlterarMusica();
-            break;
-        case 3:
-            DeletarMusica();
-            break;
-        case 4:
-            ExibirOpcoesDoMenu();
-            return;
-        default:
-            Console.WriteLine("Opção inválida");
-            break;
-    }
+        Console.WriteLine("\nDigite 1 para cadastrar uma nova música.");
+        Console.WriteLine("Digite 2 para alterar informação de uma música.");
+        Console.WriteLine("Digite 3 para deletar música.");
+        Console.WriteLine("Digite 4 para voltar ao menu principal.");
+
+        Console.Write("\nDigite a sua opção: ");
+        string opcaoEscolhida = Console.ReadLine()!;
+        opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
+
+        switch (opcaoEscolhidaNumerica)
+        {
+            case 1:
+                RegistrarMusica();
+                break;
+            case 2:
+                AlterarMusica();
+                break;
+            case 3:
+                DeletarMusica();
+                break;
+            case 4:
+                return;
+            default:
+                Console.WriteLine("Opção inválida");
+                break;
+        }
+    } while (opcaoEscolhidaNumerica != 4);
 }
 
 void ValidacaoNegativa()
 {
     Console.WriteLine($"A banda não foi encontrada.");
-    Console.WriteLine($"Pressione qualquer tecla para voltar ao menu principal.");
+    Console.WriteLine($"Pressione qualquer tecla para voltar ao menu anterior.");
     Console.ReadKey();
     Console.Clear();
-    ExibirOpcoesDoMenu();
+    return;
 
 }
 
 void ValidacaoNegativaMusica()
 {
     Console.WriteLine($"A música não foi encontrada.");
-    Console.WriteLine($"Pressione qualquer tecla para voltar ao menu principal.");
+    Console.WriteLine($"Pressione qualquer tecla para voltar ao menu anterior.");
     Console.ReadKey();
     Console.Clear();
-    ExibirOpcoesDoMenu();
+    return;
 
 }
 
@@ -349,13 +352,8 @@ void RegistrarMusica()
     Console.Clear();
     ExibirTituloDaOpcao("Registrando uma música");
     Console.Write("\nBanda autora: \n");
-    foreach (Banda banda in bandasRegistradas)
-    {
-        Console.WriteLine($"Banda: {banda}");
-    }
-    Console.Write("\nDigite o nome da banda que você deseja registrar a música: \n");
-    string nomeBanda = Console.ReadLine()!;
-    Banda bandaEncontrada = bandasRegistradas.FirstOrDefault(b => b.Nome == nomeBanda)!;
+    ExibirListaDeBandas();
+    Banda bandaEncontrada = ValidarBanda();
     if (bandaEncontrada != null)
     {
         Console.Write("\nDigite o nome da música: \n");
@@ -368,18 +366,14 @@ void RegistrarMusica()
         Musica novaMusica = new Musica(nomeMusica, generoMusica, duracaoMusica, new List<double>());
         bandaEncontrada.ListaMusicas.Add(novaMusica);
 
-        Console.WriteLine($"\nA música {novaMusica.Nome} da banda {nomeBanda} foi registrada com sucesso!");
+        Console.WriteLine($"\nA música {novaMusica.Nome} da banda {bandaEncontrada.Nome} foi registrada com sucesso!");
         Thread.Sleep(2000);
         Console.Clear();
-        ExibirOpcoesDoMenu();
+        return;
     }
     else
     {
-        Console.WriteLine($"A banda {nomeBanda} não foi encontrada.");
-        Console.WriteLine($"Pressione qualquer tecla para voltar ao menu principal.");
-        Console.ReadKey();
-        Console.Clear();
-        ExibirOpcoesDoMenu();
+        ValidacaoNegativa();
     }
 
 }
@@ -398,7 +392,6 @@ void AlterarMusica()
             Console.Write($"\nA banda {bandaEncontrada.Nome} ainda não possui nenhuma música para ser avaliada.");
             Console.ReadKey();
             Console.WriteLine("Pressione qualquer tecla para voltar ao menu anterior.");
-            VerMusicas();
             return;
         }
         else
@@ -433,7 +426,6 @@ void AlterarMusica()
                     Console.WriteLine("Opção inválida. Aperte qualquer tecla para tentar novamente.");
                     Console.ReadKey();
                     Thread.Sleep(1500);
-                    AlterarMusica();
                     return;
                 }
 
@@ -466,7 +458,6 @@ void DeletarMusica()
             Console.Write($"\nA banda {bandaEncontrada.Nome} ainda não possui nenhuma música para ser avaliada.");
             Console.ReadKey();
             Console.WriteLine("Pressione qualquer tecla para voltar ao menu anterior.");
-            VerMusicas();
             return;
         }
         else
@@ -483,7 +474,7 @@ void DeletarMusica()
                 Console.Clear();
                 if (opcao == 1)
                 {
-                    listaDeMusicas.Remove(musicaEncontrada);
+                    bandaEncontrada.ListaMusicas.Remove(musicaEncontrada);
                     Console.WriteLine("Música deletada com sucesso.");
 
                 }
@@ -494,7 +485,6 @@ void DeletarMusica()
                     Console.WriteLine($"Pressione qualquer tecla para voltar ao menu principal.");
                     Console.ReadKey();
                     Console.Clear();
-                    ExibirOpcoesDoMenu();
                     return;
                 }
                 else
@@ -502,7 +492,6 @@ void DeletarMusica()
                     Console.WriteLine("Opção inválida. Aperte qualquer tecla para tentar novamente.");
                     Console.ReadKey();
                     Thread.Sleep(1500);
-                    DeletarMusica();
                     return;
                 }
 
@@ -523,6 +512,8 @@ void DeletarMusica()
 
 void SubMenuNotas()
 {
+    int opcaoEscolhidaNumerica = 0;
+    do{
     Thread.Sleep(1500);
     Console.Clear();
     ExibirTituloDaOpcao("Menu de Notas");
@@ -535,7 +526,7 @@ void SubMenuNotas()
 
     Console.Write("\nDigite a sua opção: ");
     string opcaoEscolhida = Console.ReadLine()!;
-    int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
+    opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
 
     switch (opcaoEscolhidaNumerica)
     {
@@ -555,12 +546,12 @@ void SubMenuNotas()
             VerMediaDeBanda();
             break;
         case 6:
-            ExibirOpcoesDoMenu();
             return;
         default:
             Console.WriteLine("Opção inválida");
             break;
     }
+    }while(opcaoEscolhidaNumerica != 6);
 }
 
 void VerNotas()
@@ -577,7 +568,6 @@ void VerNotas()
             Console.Write($"\nA banda {bandaEncontrada.Nome} ainda não possui nenhuma música para ser avaliada.");
             Console.ReadKey();
             Console.WriteLine("Pressione qualquer tecla para voltar ao menu anterior.");
-            VerMusicas();
             return;
         }
         else
@@ -597,7 +587,6 @@ void VerNotas()
                 Console.WriteLine($"Pressione qualquer tecla para voltar ao menu principal.");
                 Console.ReadKey();
                 Console.Clear();
-                ExibirOpcoesDoMenu();
                 return;
             }
             else
@@ -608,33 +597,34 @@ void VerNotas()
         }
     }
     else
-        {
-            ValidacaoNegativa();
-            return;
-        }
+    {
+        ValidacaoNegativa();
+        return;
+    }
 }
 
 
 
-    void DarNotas()
-    {
+void DarNotas()
+{
 
-    }
-
-
-    void AlterarNota()
-    {
-
-    }
+}
 
 
-    void DeletarNota()
-    {
+void AlterarNota()
+{
 
-    }
+}
 
-    void VerMediaDeBanda()
-    {
 
-    }
+void DeletarNota()
+{
 
+}
+
+void VerMediaDeBanda()
+{
+
+}
+
+ExibirOpcoesDoMenu();
