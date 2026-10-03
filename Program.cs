@@ -1,7 +1,4 @@
 ﻿// Screen Sound
-using System.Globalization;
-using System.Linq.Expressions;
-using System.Runtime.Serialization;
 string mensagemDeBoasVindas = "Boas vindas ao Screen Sound";
 List<Banda> bandasRegistradas = new List<Banda>();
 
